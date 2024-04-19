@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP8266 Sensor Data</title>
+    <style>
+        /* Basic CSS styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        #sensor-data {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ESP8266 Sensor Data</h1>
+        <div id="sensor-data">Loading...</div>
+    </div>
+
+    <script>
+        // JavaScript code to fetch and display sensor data
+        function fetchSensorData() {
+            // Make an AJAX request to fetch sensor data from the server
+            fetch('/get-sensor-data')
+                .then(response => response.json())
+                .then(data => {
+                    // Update the sensor data on the webpage
+                    document.getElementById('sensor-data').textContent = `Sensor Data: ${data.value}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching sensor data:', error);
+                    document.getElementById('sensor-data').textContent = 'Error fetching data';
+                });
+        }
+
+        // Call fetchSensorData function initially and then at intervals
+        fetchSensorData(); // Fetch data initially when the page loads
+        setInterval(fetchSensorData, 5000); // Fetch data every 5 seconds (adjust as needed)
+    </script>
+</body>
+</html>
